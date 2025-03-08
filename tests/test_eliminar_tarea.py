@@ -9,8 +9,7 @@ class TestEliminarTarea(unittest.TestCase):
 
         self.tarea1 = tarea("Comprar leche", "2025-03-07", "Compras", "Por hacer", self.usuario1)
         self.tarea2 = tarea("Leer libro", "2025-03-07", "Educación", "Completada", self.usuario1)
-        self.tarea_inexistente = None  # Para simular una tarea que no existe
-
+        self.tarea_inexistente = None  
     def test_eliminar_tarea_existente(self):
         resultado = self.usuario1.Eliminar_tarea()
         self.assertEqual(resultado, "Tarea eliminada correctamente")
