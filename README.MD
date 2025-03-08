@@ -95,30 +95,29 @@ A continuación, se presentan los casos de prueba para cada funcionalidad, cubri
 | 35 | Intentar iniciar sesión con contraseña incorrecta | usuario@example.com, Contraseña incorrecta | Error: Credenciales incorrectas| error    |
 | 36 | Intentar iniciar sesión con usuario inactivo | usuario@example.com, Contraseña correcta  | Error: Usuario inactivo           |  error|
 
-### Recuperar Contraseña
-| #  | Caso de Prueba                                | Entrada                                    | Resultado esperado                   | Tipo  |
-|----|----------------------------------------------|--------------------------------------------|-------------------------------------|------|
-| 37 | Usuario solicita recuperación con correo válido | usuario@example.com                     | Email de recuperación enviado     | Normal    |
-| 38 | Usuario solicita recuperación con correo en mayúsculas | USUARIO@EXAMPLE.COM                     | Email de recuperación enviado     | Normal    |
-| 39 | Usuario solicita recuperación después de restablecer | usuario@example.com                     | Email de recuperación enviado     | Normal    |
-| 40 | Usuario solicita recuperación con correo largo | 320 caracteres                          | Email de recuperación enviado     | Extremo     |
-| 41 | Usuario solicita recuperación varias veces | usuario@example.com varias veces        | Email de recuperación enviado     | Extremo     |
-| 42 | Usuario solicita recuperación desde otro dispositivo | usuario@example.com                     | Email de recuperación enviado     | Extremo     |
-| 43 | Intentar recuperación con correo incorrecto | usuario@incorrecto.com                  | Error: Usuario no registrado      | error  |
-| 44 | Intentar recuperación sin correo           | ""                                      | Error: Debe proporcionar un correo | error    |
-| 45 | Intentar recuperación con usuario inactivo | usuario@example.com                     | Error: Usuario inactivo           | error    |
+## Cambiar Contraseña
 
-### Cerrar Sesión
-| #  | Caso de Prueba                                | Entrada             | Resultado esperado                  | Tipo  |
-|----|----------------------------------------------|---------------------|------------------------------------|------|
-| 46 | Usuario cierra sesión correctamente        | Usuario autenticado | Cierre de sesión exitoso         | Normal    |
-| 47 | Usuario cierra sesión con múltiples sesiones abiertas | Varias sesiones | Cierre de sesión exitoso         | Normal    |
-| 48 | Usuario cierra sesión y vuelve a iniciar sesión | Usuario autenticado | Cierre y nuevo inicio exitoso    | Normal    |
-| 49 | Usuario cierra sesión en otro dispositivo  | Sesión en otro dispositivo | Cierre exitoso               | Extremo     |
-| 50 | Usuario cierra sesión con red inestable    | Internet intermitente | Cierre exitoso                    | Extremo     |
-| 51 | Usuario cierra sesión después de mucho tiempo | Sesión activa por 24h | Cierre exitoso               | Extremo     |
-| 52 | Intentar cerrar sesión sin haber iniciado sesión | Sin sesión activa | Error: No hay sesión activa     | error   |
-| 53 | Intentar cerrar sesión con error de servidor | Usuario autenticado | Error: No se pudo cerrar sesión | error    |
-| 54 | Intentar cerrar sesión con cuenta bloqueada | Usuario bloqueado   | Error: Cuenta bloqueada         | error    |
+| #  | Caso de Prueba                                  | Entrada                                               | Resultado Esperado                   | Tipo   |
+|----|----------------------------------------------|------------------------------------------------------|-------------------------------------|--------|
+| 37 | Usuario cambia la contraseña con éxito       | usuario@example.com, contraseña_actual, nueva_contraseña | Contraseña cambiada correctamente  | Normal |
+| 38 | Usuario cambia la contraseña con mayúsculas  | usuario@example.com, CONTRASEÑA_ACTUAL, NUEVA_CONTRASEÑA | Contraseña cambiada correctamente  | Normal |
+| 39 | Usuario cambia la contraseña después de haberla restablecido | usuario@example.com, contraseña_actual, nueva_contraseña | Contraseña cambiada correctamente  | Normal |
+| 40 | Usuario intenta cambiar contraseña con clave muy larga | usuario@example.com, contraseña_actual, 320 caracteres | Error: Contraseña demasiado larga | Extremo |
+| 41 | Usuario intenta cambiar contraseña varias veces seguidas | usuario@example.com, contraseña_actual, nueva_contraseña repetida varias veces | Contraseña cambiada correctamente  | Extremo |
+| 42 | Usuario cambia la contraseña desde otro dispositivo | usuario@example.com, contraseña_actual, nueva_contraseña | Contraseña cambiada correctamente  | Extremo |
+| 43 | Intentar cambiar la contraseña con correo incorrecto | usuario@incorrecto.com, contraseña_actual, nueva_contraseña | Error: Usuario no registrado      | Error  |
+| 44 | Intentar cambiar la contraseña sin proporcionar correo | "", contraseña_actual, nueva_contraseña | Error: Debe proporcionar un correo | Error  |
+| 45 | Intentar cambiar la contraseña de un usuario inactivo | usuario@example.com, contraseña_actual, nueva_contraseña | Error: Usuario inactivo           | Error  |
 
 
+### Crear cuenta
+| #  | Caso de Prueba                                   | Entrada                             | Resultado esperado                  | Tipo  |
+| 46 | Usuario crea cuenta correctamente              | Datos válidos                       | Cuenta creada exitosamente          | Normal  |
+| 47 | Usuario crea cuenta y luego inicia sesión      | Datos válidos, luego login          | Registro e inicio exitoso           | Normal  |
+| 48 | Usuario crea cuenta con correo alternativo     | Correo válido y diferente           | Cuenta creada exitosamente          | Normal  |
+| 49 | Usuario crea cuenta con contraseña muy larga   | Contraseña > 100 caracteres         | Error: Contraseña demasiado larga   | Extremo  |
+| 50 | Usuario crea cuenta con nombre muy largo       | Nombre > 50 caracteres              | Error: Nombre demasiado largo       | Extremo  |
+| 51 | Usuario crea cuenta con conexión inestable     | Internet intermitente               | Error: No se pudo completar el registro | Extremo  |
+| 52 | Usuario crea cuenta con correo ya registrado   | Correo en uso                       | Error: Correo ya registrado         | Error  |
+| 53 | Usuario crea cuenta con contraseña débil       | Contraseña insegura                 | Error: Contraseña demasiado débil   | Error  |
+| 54 | Usuario crea cuenta con datos incompletos      | Campos vacíos o incompletos         | Error: Datos obligatorios faltantes | Error  |
