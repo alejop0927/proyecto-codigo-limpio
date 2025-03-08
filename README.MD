@@ -110,14 +110,16 @@ A continuación, se presentan los casos de prueba para cada funcionalidad, cubri
 | 45 | Intentar cambiar la contraseña de un usuario inactivo | usuario@example.com, contraseña_actual, nueva_contraseña | Error: Usuario inactivo           | Error  |
 
 
-### Crear cuenta
-| #  | Caso de Prueba                                   | Entrada                             | Resultado esperado                  | Tipo  |
-| 46 | Usuario crea cuenta correctamente              | Datos válidos                       | Cuenta creada exitosamente          | Normal  |
-| 47 | Usuario crea cuenta y luego inicia sesión      | Datos válidos, luego login          | Registro e inicio exitoso           | Normal  |
-| 48 | Usuario crea cuenta con correo alternativo     | Correo válido y diferente           | Cuenta creada exitosamente          | Normal  |
-| 49 | Usuario crea cuenta con contraseña muy larga   | Contraseña > 100 caracteres         | Error: Contraseña demasiado larga   | Extremo  |
-| 50 | Usuario crea cuenta con nombre muy largo       | Nombre > 50 caracteres              | Error: Nombre demasiado largo       | Extremo  |
-| 51 | Usuario crea cuenta con conexión inestable     | Internet intermitente               | Error: No se pudo completar el registro | Extremo  |
-| 52 | Usuario crea cuenta con correo ya registrado   | Correo en uso                       | Error: Correo ya registrado         | Error  |
-| 53 | Usuario crea cuenta con contraseña débil       | Contraseña insegura                 | Error: Contraseña demasiado débil   | Error  |
-| 54 | Usuario crea cuenta con datos incompletos      | Campos vacíos o incompletos         | Error: Datos obligatorios faltantes | Error  |
+## Crear Cuenta
+
+| #  | Caso de Prueba                                | Entrada                               | Resultado Esperado                  | Tipo   |
+|----|----------------------------------------------|--------------------------------------|-------------------------------------|--------|
+| 46 | Usuario crea cuenta correctamente           | Datos válidos                        | Cuenta creada exitosamente         | Normal |
+| 47 | Usuario crea cuenta y luego inicia sesión   | Datos válidos, luego login           | Registro e inicio exitoso          | Normal |
+| 48 | Usuario crea cuenta con correo alternativo  | Correo válido y diferente            | Cuenta creada exitosamente         | Normal |
+| 49 | Usuario crea cuenta con contraseña muy larga | Contraseña > 100 caracteres          | Error: Contraseña demasiado larga  | Extremo |
+| 50 | Usuario crea cuenta con nombre muy largo    | Nombre > 50 caracteres               | Error: Nombre demasiado largo      | Extremo |
+| 51 | Usuario crea cuenta con conexión inestable  | Internet intermitente                | Error: No se pudo completar el registro | Extremo |
+| 52 | Usuario crea cuenta con correo ya registrado | Correo en uso                        | Error: Correo ya registrado        | Error  |
+| 53 | Usuario crea cuenta con contraseña débil    | Contraseña insegura                  | Error: Contraseña demasiado débil  | Error  |
+| 54 | Usuario crea cuenta con datos incompletos   | Campos vacíos o incompletos          | Error: Datos obligatorios faltantes | Error  |
