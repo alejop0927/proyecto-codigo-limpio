@@ -21,12 +21,12 @@ class TestCambiarContraseña(unittest.TestCase):
         self.assertEqual(resultado, "Contraseña cambiada correctamente")
 
     def test_cambiar_contraseña_muy_larga(self):
-        nueva_clave = "a" * 321  # Más de 320 caracteres
+        nueva_clave = "a" * 321  
         resultado = self.usuario_activo.Cambiar_contraseña("usuario@example.com", "segura123", nueva_clave)
         self.assertEqual(resultado, "Error: Contraseña demasiado larga")
 
     def test_cambiar_contraseña_varios_intentos(self):
-        for _ in range(3):  # Simulando varios intentos
+        for _ in range(3):  
             resultado = self.usuario_activo.Cambiar_contraseña("usuario@example.com", "segura123", "ClaveNueva123")
             self.assertEqual(resultado, "Contraseña cambiada correctamente")
 
