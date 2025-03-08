@@ -36,8 +36,8 @@ class TestEditarTarea(unittest.TestCase):
         """Debe lanzar AttributeError al intentar modificar una tarea inexistente"""
         tarea_inexistente = None
         with self.assertRaises(AttributeError):
-            tarea_inexistente.texto = "Nuevo texto"  # Aquí ya está corregido
-    
+            tarea_inexistente.texto = "Nuevo texto"  
+            
     def test_editar_tarea_sin_cambios(self):
         """Verifica que la copia de la tarea sea igual a la original"""
         tarea_copia = tarea(
