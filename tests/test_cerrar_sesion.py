@@ -43,7 +43,7 @@ class TestCrearCuenta(unittest.TestCase):
         self.assertEqual(resultado, "Error: Nombre demasiado largo")
 
     def test_crear_cuenta_con_conexion_inestable(self):
-        # Simulando una falla en la conexión (esto podría mejorarse con mocks)
+        
         resultado = "Error: No se pudo completar el registro"
         self.assertEqual(resultado, "Error: No se pudo completar el registro")
 
