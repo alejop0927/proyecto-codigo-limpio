@@ -1,0 +1,28 @@
+.login-box {
+    width: 360px;
+    margin: 80px auto;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.login-card-body {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.register-box {
+    width: 400px;
+    margin: 80px auto;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.register-card-body {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

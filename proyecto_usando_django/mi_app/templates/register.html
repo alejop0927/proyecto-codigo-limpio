@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registro</title>
+
+    <!-- AdminLTE CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body class="hold-transition register-page" style="background-image: url('{% static 'image/R.jpg' %}'); background-size: cover; background-position: center;">
+
+    <div class="register-box">
+        <div class="register-logo">
+            <b>Registro</b> Usuario
+        </div>
+
+        <div class="card">
+            <div class="card-body register-card-body">
+                <p class="login-box-msg">Crea tu cuenta</p>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Nombre de usuario" name="username" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Correo electrónico" name="email" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Contraseña" name="password1" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Confirmar contraseña" name="password2" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+                                <label for="agreeTerms">
+                                    Acepto los <a href="#">términos</a>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+                        </div>
+                    </div>
+                </form>
+
+                <p class="mb-1">
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Font Awesome (Iconos) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+</body>
+</html>
