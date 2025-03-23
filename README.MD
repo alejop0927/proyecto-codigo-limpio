@@ -2,38 +2,39 @@
 ## Nota importante
 
 ### Pruebas
-Para ejecutar las pruebas, debes estar dentro de la carpeta `\proyecto-codigo-limpio\proyecto_terminal\tests>` y ejecutar el siguiente comando:
+Para ejecutar las pruebas, debes estar dentro de la carpeta
+```sh
+ `\proyecto-codigo-limpio\proyecto_terminal\tests>`
+
+ ```
+ 
+  y ejecutar el siguiente comando:
 
 ```sh
 pytest
+```
+
 Esto verificará que corren correctamente las 54 pruebas.
 
-Ejecución del proyecto
+## Ejecución del proyecto
 Para correr el proyecto en la terminal, es necesario contar con el script de la base de datos, el cual se encuentra en la carpeta modelo dentro de proyecto_terminal.
 
-Pasos para ejecutar el menú del proyecto:
+# Pasos para ejecutar el menú del proyecto:
 Ubícate en la carpeta proyecto_terminal.
 
 Establece la variable de entorno PYTHONPATH con el siguiente comando (ajustando la ruta según donde tengas el proyecto guardado):
 
-sh
-Copiar
-Editar
+```sh
 $env:PYTHONPATH = "C:\Users\name_propietario\proyecto-codigo-limpio\proyecto_terminal"
+```
+
 Ejecuta el siguiente comando para iniciar el menú:
 
-sh
-Copiar
-Editar
+```sh
 python src/menu.py
+```
+
 Si todo está configurado correctamente, el programa se ejecutará sin problemas. 🚀
-
-go
-Copiar
-Editar
-
-Este formato es claro y estructurado para un `README.md`. Puedes copiarlo y pegarlo directamente 
-
 
 ## Nota:
 Para este proyecto, inicialmente se requiere la implementación de pruebas unitarias que evalúen las diferentes clases vacías. Posteriormente, se implementarán las funcionalidades de la aplicación. A continuación, se presentan los requisitos del sistema.
