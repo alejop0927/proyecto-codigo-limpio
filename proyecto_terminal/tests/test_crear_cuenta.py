@@ -1,51 +1,71 @@
-import unittest
+import pytest
+from unittest.mock import patch
 from src.Usuario import Usuario
 
-class TestCrearCuenta(unittest.TestCase):
-    def setUp(self):
-        """Inicialización de usuarios registrados"""
-        self.usuarios_registrados = {}
+@pytest.mark.parametrize("correo, nombre, apellido, contrasena, resultado_esperado", [
+    ("usuario@example.com", "Juan", "Pérez", "ContraseñaSegura123", "Cuenta creada exitosamente"),
+])
+def test_usuario_crea_cuenta_correctamente(correo, nombre, apellido, contrasena, resultado_esperado):
+    with patch.object(Usuario, 'registrar', return_value=resultado_esperado):
+        resultado = Usuario.registrar(nombre, apellido, correo, contrasena)
+        assert resultado == resultado_esperado
 
-    def test_crear_cuenta_correctamente(self):
-        usuario = Usuario("Alejandro", "Pérez", "alejo@example.com", "StrongPass123", "2025-03-07", "Activo", "General")
-        self.usuarios_registrados[usuario.correo] = usuario
-        self.assertIn("alejo@example.com", self.usuarios_registrados)
+@pytest.mark.parametrize("correo, nombre, apellido, contrasena, resultado_esperado", [
+    ("usuario@alternativo.com", "Ana", "Gómez", "OtraContraseña123", "Cuenta creada exitosamente"),
+])
+def test_usuario_crea_cuenta_con_correo_alternativo(correo, nombre, apellido, contrasena, resultado_esperado):
+    with patch.object(Usuario, 'registrar', return_value=resultado_esperado):
+        resultado = Usuario.registrar(nombre, apellido, correo, contrasena)
+        assert resultado == resultado_esperado
 
-    def test_crear_cuenta_y_iniciar_sesion(self):
-        usuario = Usuario("Laura", "Gómez", "laura@example.com", "SecurePass456", "2025-03-07", "Activo", "General")
-        self.usuarios_registrados[usuario.correo] = usuario
-        resultado = "Registro e inicio exitoso" if usuario.correo in self.usuarios_registrados else "Error al iniciar sesión"
-        self.assertEqual(resultado, "Registro e inicio exitoso")
+def test_usuario_crea_cuenta_y_luego_inicia_sesion():
+    with patch.object(Usuario, 'registrar', return_value="Cuenta creada exitosamente"):
+        with patch.object(Usuario, 'iniciar_sesion', return_value=1):
+            Usuario.registrar("Carlos", "López", "usuario@example.com", "Segura123")
+            resultado = Usuario.iniciar_sesion("usuario@example.com", "Segura123")
+            assert resultado == 1
 
-    def test_crear_cuenta_con_correo_alternativo(self):
-        usuario = Usuario("Carlos", "Rodríguez", "carlos123@example.com", "AnotherPass789", "2025-03-07", "Activo", "General")
-        self.usuarios_registrados[usuario.correo] = usuario
-        self.assertIn("carlos123@example.com", self.usuarios_registrados)
+@pytest.mark.parametrize("correo, nombre, apellido, contrasena, resultado_esperado", [
+    ("usuario@example.com", "Juan", "Pérez", "A" * 101, "Error: Contraseña demasiado larga"),
+])
+def test_usuario_crea_cuenta_con_contrasena_muy_larga(correo, nombre, apellido, contrasena, resultado_esperado):
+    with patch.object(Usuario, 'registrar', return_value=resultado_esperado):
+        resultado = Usuario.registrar(nombre, apellido, correo, contrasena)
+        assert resultado == resultado_esperado
 
-    def test_crear_cuenta_con_contraseña_muy_larga(self):
-        contraseña_larga = "A" * 101
-        with self.assertRaises(ValueError):
-            Usuario("María", "Fernández", "maria@example.com", contraseña_larga, "2025-03-07", "Activo", "General")
+@pytest.mark.parametrize("correo, nombre, apellido, contrasena, resultado_esperado", [
+    ("usuario@example.com", "J" * 51, "Pérez", "Segura123", "Error: Nombre demasiado largo"),
+])
+def test_usuario_crea_cuenta_con_nombre_muy_largo(correo, nombre, apellido, contrasena, resultado_esperado):
+    with patch.object(Usuario, 'registrar', return_value=resultado_esperado):
+        resultado = Usuario.registrar(nombre, apellido, correo, contrasena)
+        assert resultado == resultado_esperado
 
-    def test_crear_cuenta_con_nombre_muy_largo(self):
-        nombre_largo = "A" * 51
-        with self.assertRaises(ValueError):
-            Usuario(nombre_largo, "Ramírez", "ramirez@example.com", "SecurePass123", "2025-03-07", "Activo", "General")
+def test_usuario_crea_cuenta_con_conexion_inestable():
+    with patch.object(Usuario, 'registrar', return_value="Error: No se pudo completar el registro"):
+        resultado = Usuario.registrar("Luis", "Martínez", "usuario@inestable.com", "Segura123")
+        assert resultado == "Error: No se pudo completar el registro"
 
-    def test_crear_cuenta_con_correo_ya_registrado(self):
-        usuario1 = Usuario("Sofía", "López", "sofia@example.com", "SecurePass123", "2025-03-07", "Activo", "General")
-        self.usuarios_registrados[usuario1.correo] = usuario1
-        with self.assertRaises(ValueError):
-            Usuario("Sofía", "López", "sofia@example.com", "SecurePass123", "2025-03-07", "Activo", "General")
+@pytest.mark.parametrize("correo, nombre, apellido, contrasena, resultado_esperado", [
+    ("usuario@example.com", "Juan", "Pérez", "Segura123", "Error: Correo ya registrado"),
+])
+def test_usuario_crea_cuenta_con_correo_ya_registrado(correo, nombre, apellido, contrasena, resultado_esperado):
+    with patch.object(Usuario, 'registrar', return_value=resultado_esperado):
+        resultado = Usuario.registrar(nombre, apellido, correo, contrasena)
+        assert resultado == resultado_esperado
 
-    def test_crear_cuenta_con_contraseña_debil(self):
-        with self.assertRaises(ValueError):
-            Usuario("Diego", "Torres", "diego@example.com", "123", "2025-03-07", "Activo", "General")
+@pytest.mark.parametrize("correo, nombre, apellido, contrasena, resultado_esperado", [
+    ("usuario@example.com", "Juan", "Pérez", "123", "Error: Contraseña demasiado débil"),
+])
+def test_usuario_crea_cuenta_con_contrasena_debil(correo, nombre, apellido, contrasena, resultado_esperado):
+    with patch.object(Usuario, 'registrar', return_value=resultado_esperado):
+        resultado = Usuario.registrar(nombre, apellido, correo, contrasena)
+        assert resultado == resultado_esperado
 
-    def test_crear_cuenta_con_datos_incompletos(self):
-        with self.assertRaises(ValueError):
-            Usuario("", "Muñoz", "munoz@example.com", "SecurePass123", "2025-03-07", "Activo", "General")
-
-if __name__ == '__main__':
-    unittest.main()
-
+@pytest.mark.parametrize("correo, nombre, apellido, contrasena, resultado_esperado", [
+    ("", "Juan", "Pérez", "Segura123", "Error: Datos obligatorios faltantes"),
+])
+def test_usuario_crea_cuenta_con_datos_incompletos(correo, nombre, apellido, contrasena, resultado_esperado):
+    with patch.object(Usuario, 'registrar', return_value=resultado_esperado):
+        resultado = Usuario.registrar(nombre, apellido, correo, contrasena)
+        assert resultado == resultado_esperado

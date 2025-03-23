@@ -1,5 +1,5 @@
-from Usuario import Usuario
-from tarea import Tarea
+from .Usuario import Usuario
+from .tarea import Tarea
 
 
 def menu(usuario_id):
@@ -42,13 +42,13 @@ def inicio():
         print("1. Iniciar sesión")
         print("2. Registrarse")
         print("3. Salir")
-        print("4. Cambiar contraseña")  # Corregido: opción de cambiar contraseña
+        print("4. Cambiar contraseña")  
         opcion = input("Selecciona una opción: ")
 
         if opcion == "1":
             correo = input("Correo: ")
             contraseña = input("Contraseña: ")
-            usuario_id = Usuario.iniciar_sesion(correo, contraseña)  # Corregido
+            usuario_id = Usuario.iniciar_sesion(correo, contraseña)  
             if usuario_id:
                 menu(usuario_id)
         elif opcion == "2":

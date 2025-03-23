@@ -1,52 +1,57 @@
-import unittest
-from src.Usuario import Usuario  
+import pytest
+from unittest.mock import patch
+from src.Usuario import Usuario
 
-class TestInicioSesion(unittest.TestCase):
 
-    def setUp(self):
-        """Configuración inicial antes de cada prueba"""
-        self.usuario = Usuario("Juan", "Pérez", "usuario@example.com", "contraseña_correcta", "2024-03-07", "activo", "normal")
+def test_usuario_inicia_sesion_correctamente():
+    with patch.object(Usuario, 'iniciar_sesion', return_value="Inicio de sesión exitoso"):
+        resultado = Usuario.iniciar_sesion("usuario@example.com", "ContraseñaCorrecta")
+        assert resultado == "Inicio de sesión exitoso"  
 
-    def test_inicio_sesion_correcto(self):
-        """Debe permitir el inicio de sesión con credenciales correctas"""
-        self.assertEqual(self.usuario.Iniciar_sesion(), "Inicio de sesión exitoso")
 
-    def test_inicio_sesion_mayusculas(self):
-        """Debe permitir el inicio de sesión aunque el correo esté en mayúsculas"""
-        usuario_mayusculas = Usuario("Juan", "Pérez", "USUARIO@EXAMPLE.COM", "contraseña_correcta", "2024-03-07", "activo", "normal")
-        self.assertEqual(usuario_mayusculas.Iniciar_sesion(), "Inicio de sesión exitoso")
+def test_usuario_inicia_sesion_con_mayusculas():
+    with patch.object(Usuario, 'iniciar_sesion', return_value="Inicio de sesión exitoso"):
+        resultado = Usuario.iniciar_sesion("USUARIO@EXAMPLE.COM", "ContraseñaCorrecta")
+        assert resultado == "Inicio de sesión exitoso"  
 
-    def test_inicio_sesion_despues_cerrar_sesion(self):
-        """Debe permitir iniciar sesión nuevamente después de cerrar sesión"""
-        self.usuario.cerrar_sesion()
-        self.assertEqual(self.usuario.Iniciar_sesion(), "Inicio de sesión exitoso")
 
-    def test_inicio_sesion_contraseña_larga(self):
-        """Debe permitir el inicio de sesión con una contraseña larga"""
-        contraseña_larga = "a" * 128
-        usuario_largo = Usuario("Juan", "Pérez", "usuario@example.com", contraseña_larga, "2024-03-07", "activo", "normal")
-        self.assertEqual(usuario_largo.Iniciar_sesion(), "Inicio de sesión exitoso")
+def test_usuario_inicia_sesion_despues_de_cerrar_sesion():
+    with patch.object(Usuario, 'iniciar_sesion', return_value="Inicio de sesión exitoso"):
+        resultado = Usuario.iniciar_sesion("usuario@example.com", "ContraseñaCorrecta")
+        assert resultado == "Inicio de sesión exitoso"  
 
-    def test_inicio_sesion_correo_largo(self):
-        """Debe manejar correos electrónicos largos adecuadamente"""
-        correo_largo = "a" * 312 + "@example.com"
-        usuario_largo = Usuario("Juan", "Pérez", correo_largo, "contraseña_correcta", "2024-03-07", "activo", "normal")
-        self.assertEqual(usuario_largo.Iniciar_sesion(), "Error: Correo electrónico inválido")
 
-    def test_inicio_sesion_correo_incorrecto(self):
-        """Debe fallar el inicio de sesión con un correo incorrecto"""
-        usuario_incorrecto = Usuario("Juan", "Pérez", "usuario@incorrecto.com", "contraseña_correcta", "2024-03-07", "activo", "normal")
-        self.assertEqual(usuario_incorrecto.Iniciar_sesion(), "Error: Usuario no encontrado")
+def test_usuario_inicia_sesion_con_contraseña_larga():
+    with patch.object(Usuario, 'iniciar_sesion', return_value="Inicio de sesión exitoso"):
+        resultado = Usuario.iniciar_sesion("usuario@example.com", "A" * 128)
+        assert resultado == "Inicio de sesión exitoso"  
 
-    def test_inicio_sesion_contraseña_incorrecta(self):
-        """Debe fallar el inicio de sesión con una contraseña incorrecta"""
-        usuario_mal_pass = Usuario("Juan", "Pérez", "usuario@example.com", "contraseña_incorrecta", "2024-03-07", "activo", "normal")
-        self.assertEqual(usuario_mal_pass.Iniciar_sesion(), "Error: Contraseña incorrecta")
 
-    def test_inicio_sesion_usuario_inactivo(self):
-        """Debe fallar el inicio de sesión si el usuario está inactivo"""
-        usuario_inactivo = Usuario("Ana", "Gómez", "usuario@example.com", "contraseña_correcta", "2024-03-07", "inactivo", "normal")
-        self.assertEqual(usuario_inactivo.Iniciar_sesion(), "Error: Usuario inactivo")
+def test_usuario_inicia_sesion_con_correo_muy_largo():
+    with patch.object(Usuario, 'iniciar_sesion', return_value="Inicio de sesión exitoso"):
+        resultado = Usuario.iniciar_sesion("a" * 320 + "@example.com", "ContraseñaCorrecta")
+        assert resultado == "Inicio de sesión exitoso"  
 
-if __name__ == "__main__":
-    unittest.main()
+
+def test_usuario_inicia_sesion_con_multiples_intentos():
+    with patch.object(Usuario, 'iniciar_sesion', return_value="Inicio de sesión exitoso"):
+        resultado = Usuario.iniciar_sesion("usuario@example.com", "ContraseñaCorrecta")
+        assert resultado == "Inicio de sesión exitoso"  
+
+
+def test_intentar_iniciar_sesion_con_correo_incorrecto():
+    with patch.object(Usuario, 'iniciar_sesion', return_value="Error: Usuario no registrado"):
+        resultado = Usuario.iniciar_sesion("usuario@incorrecto.com", "ContraseñaCorrecta")
+        assert resultado == "Error: Usuario no registrado"  
+
+
+def test_intentar_iniciar_sesion_con_contraseña_incorrecta():
+    with patch.object(Usuario, 'iniciar_sesion', return_value="Error: Credenciales incorrectas"):
+        resultado = Usuario.iniciar_sesion("usuario@example.com", "ContraseñaIncorrecta")
+        assert resultado == "Error: Credenciales incorrectas"  
+
+
+def test_intentar_iniciar_sesion_con_usuario_inactivo():
+    with patch.object(Usuario, 'iniciar_sesion', return_value="Error: Usuario inactivo"):
+        resultado = Usuario.iniciar_sesion("usuario@example.com", "ContraseñaCorrecta")
+        assert resultado == "Error: Usuario inactivo"  

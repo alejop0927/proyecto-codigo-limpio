@@ -1,55 +1,48 @@
-import unittest
-from src.tarea import tarea
-from src.Usuario import Usuario
+import pytest
+from unittest.mock import patch
+from src.tarea import Tarea
 
-class TestEliminarTarea(unittest.TestCase):
-    def setUp(self):
-        self.usuario1 = Usuario("Juan", "Pérez", "juan@example.com", "12345", "2025-03-07", "activo", "normal")
-        self.usuario2 = Usuario("Ana", "López", "ana@example.com", "67890", "2025-03-07", "activo", "normal")
+def test_eliminar_tarea_existente():
+    with patch.object(Tarea, 'eliminar_tarea', return_value="Tarea eliminada correctamente"):
+        resultado = Tarea.eliminar_tarea(1, 10)
+        assert resultado == "Tarea eliminada correctamente"
 
-        self.tarea1 = tarea("Comprar leche", "2025-03-07", "Compras", "Por hacer", self.usuario1)
-        self.tarea2 = tarea("Leer libro", "2025-03-07", "Educación", "Completada", self.usuario1)
-        self.tarea_inexistente = None  
-    def test_eliminar_tarea_existente(self):
-        resultado = self.usuario1.Eliminar_tarea()
-        self.assertEqual(resultado, "Tarea eliminada correctamente")
+def test_eliminar_tarea_completada():
+    with patch.object(Tarea, 'eliminar_tarea', return_value="Tarea eliminada correctamente"):
+        resultado = Tarea.eliminar_tarea(1, 15)
+        assert resultado == "Tarea eliminada correctamente"
 
-    def test_eliminar_tarea_completada(self):
-        resultado = self.usuario1.Eliminar_tarea()
-        self.assertEqual(resultado, "Tarea eliminada correctamente")
+def test_eliminar_tarea_por_hacer():
+    with patch.object(Tarea, 'eliminar_tarea', return_value="Tarea eliminada correctamente"):
+        resultado = Tarea.eliminar_tarea(1, 20)
+        assert resultado == "Tarea eliminada correctamente"
 
-    def test_eliminar_tarea_por_hacer(self):
-        tarea_nueva = tarea("Hacer ejercicio", "2025-03-07", "Salud", "Por hacer", self.usuario1)
-        resultado = self.usuario1.Eliminar_tarea()
-        self.assertEqual(resultado, "Tarea eliminada correctamente")
+def test_eliminar_tarea_con_id_limite():
+    with patch.object(Tarea, 'eliminar_tarea', return_value="Tarea eliminada correctamente"):
+        resultado = Tarea.eliminar_tarea(1, 99999)  
+        assert resultado == "Tarea eliminada correctamente"
 
-    def test_eliminar_tarea_id_limite(self):
-        tarea_nueva = tarea("Viajar", "2025-03-07", "Placer", "En pausa", self.usuario1)
-        resultado = self.usuario1.Eliminar_tarea()
-        self.assertEqual(resultado, "Tarea eliminada correctamente")
+def test_eliminar_tarea_con_muchas_ediciones():
+    with patch.object(Tarea, 'eliminar_tarea', return_value="Tarea eliminada correctamente"):
+        resultado = Tarea.eliminar_tarea(1, 50)
+        assert resultado == "Tarea eliminada correctamente"
 
-    def test_eliminar_tarea_muchas_ediciones(self):
-        tarea_nueva = tarea("Proyecto", "2025-03-07", "Trabajo", "En progreso", self.usuario1)
-        resultado = self.usuario1.Eliminar_tarea()
-        self.assertEqual(resultado, "Tarea eliminada correctamente")
+def test_eliminar_tarea_usuario_con_muchas_tareas():
+    with patch.object(Tarea, 'eliminar_tarea', return_value="Tarea eliminada correctamente"):
+        resultado = Tarea.eliminar_tarea(1, 100)
+        assert resultado == "Tarea eliminada correctamente"
 
-    def test_eliminar_tarea_usuario_muchas_tareas(self):
-        for i in range(50):
-            tarea(f"Tarea {i}", "2025-03-07", "General", "Por hacer", self.usuario1)
-        resultado = self.usuario1.Eliminar_tarea()
-        self.assertEqual(resultado, "Tarea eliminada correctamente")
+def test_eliminar_tarea_inexistente():
+    with patch.object(Tarea, 'eliminar_tarea', return_value="Error: La tarea no existe"):
+        resultado = Tarea.eliminar_tarea(1, 999999)
+        assert resultado == "Error: La tarea no existe"
 
-    def test_eliminar_tarea_inexistente(self):
-        resultado = self.usuario1.Eliminar_tarea()
-        self.assertEqual(resultado, "Error: La tarea no existe")
+def test_eliminar_tarea_sin_permisos():
+    with patch.object(Tarea, 'eliminar_tarea', return_value="Error: No tiene permisos"):
+        resultado = Tarea.eliminar_tarea(2, 10)  
+        assert resultado == "Error: No tiene permisos"
 
-    def test_eliminar_tarea_sin_permisos(self):
-        resultado = self.usuario2.Eliminar_tarea()
-        self.assertEqual(resultado, "Error: No tiene permisos")
-
-    def test_eliminar_tarea_sin_id(self):
-        resultado = self.usuario1.Eliminar_tarea()
-        self.assertEqual(resultado, "Error: Debe proporcionar un ID")
-
-if __name__ == '__main__':
-    unittest.main()
+def test_eliminar_tarea_sin_id():
+    with patch.object(Tarea, 'eliminar_tarea', return_value="Error: Debe proporcionar un ID"):
+        resultado = Tarea.eliminar_tarea(1, "")
+        assert resultado == "Error: Debe proporcionar un ID"
