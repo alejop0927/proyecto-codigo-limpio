@@ -1,5 +1,5 @@
-from .Usuario import Usuario
-from .tarea import Tarea
+from src.Usuario import Usuario
+from src.tarea import Tarea
 
 
 def menu(usuario_id):
